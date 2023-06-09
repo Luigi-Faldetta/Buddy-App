@@ -7,11 +7,10 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "POST":
-      const { email, password } = req.body;
+      const user = req.body;
       const post = await prisma.post.create({
         data: {
-          email,
-          password,
+          user,
         },
       });
       res.status(201).json(post);

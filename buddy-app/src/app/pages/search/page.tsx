@@ -26,7 +26,7 @@ export default function Search() {
     <div>
       <div className="relative overflow-scroll flex flex-col items-center justify-center w-screen h-screen bg-[url(../../public/4034811.jpg)] bg-cover overflow-y-hidden overflow-x-hidden">
         <form
-          className="opacity-90 w-3/7 p-6 bg-white rounded-md shadow-md h-2/4 overflow-scroll h-4/5"
+          className="opacity-90 w-3/7 p-6 bg-white rounded-md shadow-md overflow-scroll h-4/5"
           onSubmit={handleSubmit}
         >
           <div className="text-center">

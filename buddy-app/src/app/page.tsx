@@ -8,7 +8,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { prisma } from "./db";
-import { createMockUser } from "./testUtils";
+const { createMockUser } = require("./testUtils");
 import axios from "axios";
 
 // import { signIn } from "next-auth/react";
