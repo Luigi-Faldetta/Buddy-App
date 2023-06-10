@@ -1,50 +1,43 @@
-// export default function Home() {
-//   return (
-
-//   );
-// }
+//@ts-nocheck
 "use client";
-// import { FormEventHandler, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { prisma } from "./db";
-const { createMockUser } = require("./testUtils");
 import axios from "axios";
 
-// import { signIn } from "next-auth/react";
-
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
-  // prisma.user.create(
-  //   data: {
-  //     firstName: "John",
-  //     lastName: "Doe",
-  //     email: "johndoe@example.com",
-  //     password: "password123",
-  //     ownDescription: "Lorem ipsum dolor sit amet...",
-  //     buddyDescription: "Lorem ipsum dolor sit amet...",
-  //     budget: 1000,
-  //     date: new Date(),
-  //     roomType: "Private",
-  //     location: "New York",
-  //     radius: 10,
-  //     tags: ["tag1", "tag2"],
-  //     looking: true,
-  //     matched: false,
-  //   },
-  // });
 
-  // const [userInfo, setUserInfo] = useState({ email: "", password: "" });
-  const handleSubmit = (event: any) => {
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<SubmitEvent>) => {
     event.preventDefault();
+    try {
+      console.log(email);
 
-    // Process form data
-    // const res = await signIn("credentials", {
-    //   email: userInfo.email,
-    //   password: userInfo.password,
-    //   redirect: false,
-    // });
-    router.push("/pages/dashboard");
+      const response = await axios.post("/api", {
+        email,
+        password,
+      });
+      if (response.data.message === "Authentication successful") {
+        // console.log(response.data);
+        router.push("/pages/dashboard");
+        console.log(response.data.message);
+      } else {
+        console.log(response.data.message);
+        console.log("Nope");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -62,11 +55,9 @@ export default function Login() {
               Email
             </label>
             <input
-              // value={userInfo.email}
-              // onChange={({ target }) =>
-              //   setUserInfo({ ...userInfo, email: target.value })
-              // }
               type="email"
+              value={email}
+              onChange={handleEmailChange}
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -78,11 +69,9 @@ export default function Login() {
               Password
             </label>
             <input
-              // value={userInfo.password}
-              // onChange={({ target }) =>
-              //   setUserInfo({ ...userInfo, password: target.value })
-              // }
               type="password"
+              value={password}
+              onChange={handlePasswordChange}
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-gray-400 focus:ring-gray-300 focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
@@ -93,12 +82,7 @@ export default function Login() {
             Forgot your Password?
           </Link>
           <div className="mt-2">
-            <button
-              // onClick={() => {
-              //   signIn();
-              // }}
-              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
-            >
+            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
               Login
             </button>
           </div>
