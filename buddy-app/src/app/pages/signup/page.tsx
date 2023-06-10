@@ -46,10 +46,10 @@ export default function Signup() {
 
   const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
 
-  userData.firstName = { name };
-  userData.lastName = { surname };
-  userData.email = { email };
-  userData.password = { password };
+  userData.firstName = name;
+  userData.lastName = surname;
+  userData.email = email;
+  userData.password = password;
 
   sessionStorage.setItem("userData", JSON.stringify(userData));
 

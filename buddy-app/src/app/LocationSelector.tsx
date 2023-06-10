@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   const [selectedPlace, setSelectedPlace] = useState<google.maps.LatLng | null>(
     null
   );
-  const [selectedRadius, setSelectedRadius] = useState("");
+  const [selectedRadius, setSelectedRadius] = useState(0);
 
   const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
 
@@ -77,10 +77,10 @@ const Home: NextPage = () => {
     return null;
   };
 
-  const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  const userData = JSON.parse(sessionStorage.getItem("userData"));
 
-  userData.location = { selectedPlace };
-  userData.radius = { selectedRadius };
+  userData.location = selectedPlace;
+  userData.radius = selectedRadius;
 
   sessionStorage.setItem("userData", JSON.stringify(userData));
 

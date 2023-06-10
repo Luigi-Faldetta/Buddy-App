@@ -26,14 +26,22 @@ export default function Search() {
     setRoomType(e.target.value);
   };
 
+  const mock = {
+    firstName: "Luigi",
+    lastName: "jhgksgh",
+  };
+
   const router = useRouter();
 
   const handleSubmit = async (event: any) => {
+    console.log("this is ", userData);
     event.preventDefault();
-
     try {
       // Send a POST request to your API endpoint
-      const response = await axios.post("/api/register", userData);
+      const response = await axios.post("/api/register", {
+        firstName: "Luigi",
+        lastName: "jhgksgh",
+      });
 
       console.log("User created:", response.data);
       // Handle successful response or redirect the user to a success page
@@ -47,9 +55,9 @@ export default function Search() {
 
   const userData = JSON.parse(sessionStorage.getItem("userData"));
 
-  userData.budget = { sliderValue };
-  userData.date = { selectedDate };
-  userData.roomType = { roomType };
+  userData.budget = sliderValue;
+  userData.date = selectedDate;
+  userData.roomType = roomType;
   userData.looking = true;
   userData.matched = false;
 

@@ -45,29 +45,6 @@ const PlacesAutocomplete = ({
     }
   };
 
-  // const renderSuggestions = () => {
-  //   return data.map((suggestion: any) => {
-  //     const {
-  //       place_id,
-  //       structured_formatting: { main_text, secondary_text },
-  //       description,
-  //     } = suggestion;
-
-  //     return (
-  //       <li
-  //         key={place_id}
-  //         onClick={() => {
-  //           setValue(description, false);
-  //           clearSuggestions();
-  //           onAddressSelect && onAddressSelect(description);
-  //         }}
-  //       >
-  //         <strong>{main_text}</strong> <small>{secondary_text}</small>
-  //       </li>
-  //     );
-  //   });
-  // };
-
   const renderSuggestions = () => {
     return data.map((suggestion: any, index: number) => {
       const {

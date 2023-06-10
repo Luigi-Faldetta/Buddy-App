@@ -38,7 +38,6 @@ export default function Profile() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
     // Process form data
 
     router.push("/pages/search");
@@ -46,10 +45,10 @@ export default function Profile() {
 
   const userData = JSON.parse(sessionStorage.getItem("userData"));
 
-  userData.image = { image };
-  userData.ownDescription = { description };
-  userData.buddyDescription = { flatmate };
-  userData.tags = { selectedCheckboxes };
+  userData.image = image;
+  userData.ownDescription = description;
+  userData.buddyDescription = flatmate;
+  userData.tags = selectedCheckboxes;
 
   sessionStorage.setItem("userData", JSON.stringify(userData));
 
