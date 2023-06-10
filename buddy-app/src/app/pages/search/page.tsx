@@ -4,7 +4,6 @@ import React, { ChangeEvent, useState } from "react";
 import DateInput from "../../DateInput";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import LocationSelector from "../../LocationSelector";
 import { Slider } from "@material-tailwind/react";
 const { PrismaClient } = require("@prisma/client");
 import axios from "axios";
@@ -26,31 +25,25 @@ export default function Search() {
     setRoomType(e.target.value);
   };
 
-  const mock = {
-    firstName: "Luigi",
-    lastName: "jhgksgh",
-  };
-
   const router = useRouter();
 
   const handleSubmit = async (event: any) => {
     console.log("this is ", userData);
     event.preventDefault();
-    try {
-      // Send a POST request to your API endpoint
-      const response = await axios.post("/api/register", {
-        firstName: "Luigi",
-        lastName: "jhgksgh",
-      });
+    // try {
+    //   // Send a POST request to your API endpoint
+    //   const response = await axios.post("/api/register", {
+    //   userData
+    //   });
 
-      console.log("User created:", response.data);
-      // Handle successful response or redirect the user to a success page
-    } catch (error) {
-      console.error("Error creating user:", error);
-      // Handle error response or show an error message to the user
-    }
+    //   console.log("User created:", response.data);
+    //   // Handle successful response or redirect the user to a success page
+    // } catch (error) {
+    //   console.error("Error creating user:", error);
+    //   // Handle error response or show an error message to the user
+    // }
 
-    router.push("pages/dashboard");
+    router.push("pages/map");
   };
 
   const userData = JSON.parse(sessionStorage.getItem("userData"));
@@ -135,11 +128,8 @@ export default function Search() {
           </select>
 
           <p className="block text-sm mb-2 font-semibold text-gray-800">
-            Now pick your search location
+            Now set your search location
           </p>
-          <div>
-            <LocationSelector></LocationSelector>
-          </div>
 
           <div className="mt-2">
             <button
