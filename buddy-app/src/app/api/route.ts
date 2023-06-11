@@ -21,8 +21,17 @@ export async function POST(req) {
   console.log("This is the email ", email);
 
   const user = await prisma.user.findFirst({
-    where: { email },
-    select: { email: true, password: true },
+    where: { email, password },
+    select: {
+      email: true,
+      password: true,
+      firstName: true,
+      location: true,
+      radius: true,
+      matched: true,
+      image: true,
+      tags: true,
+    },
   });
 
   console.log(user);
@@ -32,7 +41,9 @@ export async function POST(req) {
 
     // if (isPasswordMatch) {
 
-    return res.json({ message: "Authentication successful" });
+    // return res.json({ message: "Authentication successful" });
+    return res.json({ user });
+
     // }
   }
 

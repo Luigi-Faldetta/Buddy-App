@@ -28,10 +28,11 @@ export default function Login() {
         email,
         password,
       });
-      if (response.data.message === "Authentication successful") {
-        console.log(response.data);
+      // if (response.data.message === "Authentication successful") {
+      if (response.data.user) {
+        console.log(response.data.user.firstName);
         router.push("/pages/dashboard");
-        console.log(response.data.message);
+        // console.log(response.data.message);
       } else {
         console.log(response.data.message);
         console.log("Nope");
