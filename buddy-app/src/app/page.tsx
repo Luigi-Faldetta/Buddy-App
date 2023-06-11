@@ -31,6 +31,7 @@ export default function Login() {
       // if (response.data.message === "Authentication successful") {
       if (response.data.user) {
         console.log(response.data.user.firstName);
+        sessionStorage.setItem("userData", JSON.stringify(response.data.user));
         router.push("/pages/dashboard");
         // console.log(response.data.message);
       } else {

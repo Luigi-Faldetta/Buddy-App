@@ -1,8 +1,33 @@
+//@ts-nocheck
+"use client";
+import { useEffect, useState } from "react";
+
 export default function Dashboard() {
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    // Retrieve the stored user data from sessionStorage
+    const storedUserData = sessionStorage.getItem("userData");
+
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
+  }, []);
+
   return (
     <div>
       <div className="flex justify-center mt-4">
         <h1>Buddy App</h1>
+      </div>
+      <div>
+        {userData && (
+          <div>
+            <h1>
+              Welcome, {userData.firstName}! Your budget is {userData.budget}
+            </h1>
+            {/* Display other user data as needed */}
+          </div>
+        )}
+        {/* Render the rest of your dashboard page */}
       </div>
       <div className="flex items-center bg-gray-200 py-4 px-8">
         <div className="flex items-center space-x-4">
