@@ -2,18 +2,54 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Profile() {
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [flatmate, setFlatmate] = useState("");
   const [selectedCheckboxes, setSelectedCheckboxes] = useState([]);
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
 
   const router = useRouter();
 
+  const fileInputRef = useRef(null);
+  const dragAreaRef = useRef(null);
+
   const handleImageChange = (event: any) => {
     setImage(event.target.value);
+  };
+
+  const handleFileSelect = (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    if (file) {
+      // Perform any necessary operations with the file
+      // For example, you can set the image URL or perform validation
+      setImage(URL.createObjectURL(file));
+      setIsFileUploaded(true);
+    }
+  };
+
+  // const handleDragOver = (event) => {
+  //   event.preventDefault();
+  //   dragAreaRef.current.classList.add("dragover");
+  // };
+
+  // const handleDragLeave = (event) => {
+  //   event.preventDefault();
+  //   dragAreaRef.current.classList.remove("dragover");
+  // };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    dragAreaRef.current.classList.remove("dragover");
+    const file = event.dataTransfer.files[0];
+    if (file) {
+      // Perform any necessary operations with the file
+      // For example, you can set the image URL or perform validation
+      setImage(URL.createObjectURL(file));
+    }
   };
 
   const handleDescriptionChange = (event: any) => {
@@ -70,7 +106,21 @@ export default function Profile() {
           Upload your profile picture
         </h2>
         <div className="flex items-center justify-center w-full">
-          <label className="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center">
+          <label
+            className="flex flex-col rounded-lg border-4 border-dashed w-full h-60 p-10 group text-center"
+            htmlFor="fileInput"
+            ref={dragAreaRef}
+            // onDragOver={handleDragOver}
+            // onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input
+              type="file"
+              id="fileInput"
+              className="hidden"
+              ref={fileInputRef}
+              onChange={handleFileSelect}
+            />
             <div className="h-full w-full text-center flex flex-col items-center justify-center ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -94,16 +144,20 @@ export default function Profile() {
                 />
               </div>
               <p className="pointer-none text-gray-500 ">
-                <span className="text-sm">Drag and drop</span> files here <br />{" "}
-                or{" "}
-                <a href="" id="" className="text-blue-600 hover:underline">
+                <a
+                  h
+                  href="#"
+                  id=""
+                  className="text-blue-600 hover:underline"
+                  onClick={() => fileInputRef.current.click()}
+                >
                   select a file
                 </a>{" "}
                 from your computer
               </p>
+              {isFileUploaded && <p>File uploaded successfully.</p>}
             </div>
             <input
-              type="file"
               className="hidden"
               value={image}
               onChange={handleImageChange}

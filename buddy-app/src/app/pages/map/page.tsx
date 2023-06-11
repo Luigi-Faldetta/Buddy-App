@@ -110,7 +110,7 @@ const Home: NextPage = () => {
       console.error("Error creating user:", error);
       // Handle error response or show an error message to the user
     }
-    router.push("pages/dashboard");
+    router.push("/");
   };
 
   return (

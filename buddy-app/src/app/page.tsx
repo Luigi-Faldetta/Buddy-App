@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+// import { json } from "sequelize";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -21,14 +22,14 @@ export default function Login() {
   const handleSubmit = async (event: React.FormEvent<SubmitEvent>) => {
     event.preventDefault();
     try {
-      console.log(email);
+      // console.log(email);
 
       const response = await axios.post("/api", {
         email,
         password,
       });
       if (response.data.message === "Authentication successful") {
-        // console.log(response.data);
+        console.log(response.data);
         router.push("/pages/dashboard");
         console.log(response.data.message);
       } else {
