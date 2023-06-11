@@ -1,9 +1,24 @@
 //@ts-nocheck
 "use client";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("/api/users");
+        setUsers(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
   useEffect(() => {
     // Retrieve the stored user data from sessionStorage
     const storedUserData = sessionStorage.getItem("userData");
@@ -28,6 +43,14 @@ export default function Dashboard() {
           </div>
         )}
         {/* Render the rest of your dashboard page */}
+      </div>
+      <div>
+        <h1>User List</h1>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>{user.email}</li>
+          ))}
+        </ul>
       </div>
       <div className="flex items-center bg-gray-200 py-4 px-8">
         <div className="flex items-center space-x-4">
