@@ -48,7 +48,7 @@ export default function Search() {
 
   const userData = JSON.parse(sessionStorage.getItem("userData"));
 
-  userData.budget = sliderValue;
+  userData.budget = Number(sliderValue);
   userData.date = selectedDate;
   userData.roomType = roomType;
   userData.looking = true;

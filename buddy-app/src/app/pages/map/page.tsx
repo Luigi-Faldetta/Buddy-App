@@ -93,7 +93,16 @@ const Home: NextPage = () => {
     event.preventDefault();
     try {
       // Send a POST request to your API endpoint
-      const response = await axios.post("/api/register", userData);
+      const response = await axios.post(
+        "/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+        userData
+      );
 
       console.log("User created:", response.data);
       // Handle successful response or redirect the user to a success page
