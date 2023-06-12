@@ -52,7 +52,7 @@ const Home: NextPage = () => {
   };
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyB2c1UFOpogLfOnbfDW9lVjGP8i31uSHKo",
+    googleMapsApiKey: process.env.API_KEY,
     libraries: libraries as any,
   });
 
