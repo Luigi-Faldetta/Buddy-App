@@ -52,7 +52,7 @@ const Home: NextPage = () => {
   };
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "myAPIkey",
+    googleMapsApiKey: "AIzaSyB2c1UFOpogLfOnbfDW9lVjGP8i31uSHKo",
     libraries: libraries as any,
   });
 
@@ -95,12 +95,12 @@ const Home: NextPage = () => {
       // Send a POST request to your API endpoint
       const response = await axios.post(
         "/api/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
+        // {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // },
         userData
       );
 

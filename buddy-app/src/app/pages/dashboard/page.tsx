@@ -7,29 +7,68 @@ import { useRouter } from "next/navigation";
 export default function Dashboard() {
   const [userData, setUserData] = useState(null);
   const [users, setUsers] = useState([]);
-
-  const filteredUsers = users.filter(
-    (user) => user.firstName !== (userData?.firstName || "")
-  );
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchRadius, setSearchRadius] = useState(0);
+  const [searchRoomType, setSearchRoomType] = useState("");
 
   const router = useRouter();
 
   const handleClick = (e) => {
     router.push("/pages/info");
+    const storedUserData = JSON.parse(sessionStorage.getItem("userData"));
+    const selectedUser = filteredUsers.find(
+      (user) => user.id === e.target.dataset.userId
+    );
+
+    if (selectedUser) {
+      storedUserData.email = selectedUser.email;
+      setUserData({ ...storedUserData });
+
+      // Update the stored user data in sessionStorage
+      sessionStorage.setItem("userData", JSON.stringify(storedUserData));
+      console.log(storedUserData);
+    }
+  };
+
+  const calculateDistance = (location1, location2) => {
+    const [lat1, lon1] = location1.slice(1, -1).split(",").map(parseFloat);
+    const [lat2, lon2] = location2.slice(1, -1).split(",").map(parseFloat);
+
+    // Convert latitude and longitude to radians
+    const toRadians = (degrees) => degrees * (Math.PI / 180);
+    const φ1 = toRadians(lat1);
+    const φ2 = toRadians(lat2);
+    const Δλ = toRadians(lon2 - lon1);
+
+    // Calculate the distance using Haversine formula
+    const R = 6371; // Earth's radius in kilometers
+    const a =
+      Math.sin((φ2 - φ1) / 2) ** 2 +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c;
+
+    // Return the distance between the two locations
+    console.log(distance);
+    return distance;
   };
 
   useEffect(() => {
     // Retrieve the stored user data from sessionStorage
     const storedUserData = sessionStorage.getItem("userData");
-
+    // console.log(storedUserData);
+    setSearchRadius(JSON.parse(storedUserData).radius);
+    console.log(searchRadius);
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
     }
   }, []);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("/api/users");
+        console.log(response);
         setUsers(response.data);
       } catch (error) {
         console.error(error);
@@ -38,6 +77,31 @@ export default function Dashboard() {
 
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    const filteredUsers = userData
+      ? users.filter((user) => {
+          const distance = calculateDistance(userData.location, user.location);
+          return (
+            user.password !== (userData?.password || "") &&
+            distance <= searchRadius
+          );
+        })
+      : [];
+    console.log(searchRadius);
+    console.log(filteredUsers);
+    setFilteredUsers(filteredUsers);
+  }, [users, userData, searchRadius, searchRoomType]);
+
+  const handleBudgetChange = (e) => {
+    const selectedBudget = e.target.value;
+    setSearchRadius(Number(selectedBudget));
+  };
+
+  const handleRoomTypeChange = (e) => {
+    const selectedRoomType = e.target.value;
+    setSearchRoomType(selectedRoomType);
+  };
 
   return (
     <div>
@@ -87,6 +151,7 @@ export default function Dashboard() {
             <select
               id="budget"
               className="border border-gray-400 px-2 py-1 rounded"
+              onChange={handleBudgetChange}
             >
               <option value="">Any</option>
               <option value="1000">$1000</option>
@@ -101,6 +166,7 @@ export default function Dashboard() {
             <select
               id="roomType"
               className="border border-gray-400 px-2 py-1 rounded"
+              onChange={handleRoomTypeChange}
             >
               <option value="">Any</option>
               <option value="single">Single</option>
@@ -127,19 +193,25 @@ export default function Dashboard() {
               <div className="w-1/3 p-4" key={user.id}>
                 <div className="relative bg-gray-200 rounded-lg p-4">
                   <div className="bg-black w-20 h-20 aspect-w-4 aspect-h-3 rounded-md overflow-hidden">
-                    <img
-                      src={
-                        user.image
-                          ? user.image
-                          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                      }
-                      className="w-20 h-20"
-                    />
+                    {user.image ? (
+                      <img
+                        src={user.image}
+                        alt="User"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
+                        alt="Default"
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                   <div className="mt-4">
                     <button
                       className="px-2 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
                       onClick={handleClick}
+                      data-user-id={user.id}
                     >
                       Tag 1
                     </button>

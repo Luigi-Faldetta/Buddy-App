@@ -41,16 +41,16 @@ export default function Profile() {
   //   dragAreaRef.current.classList.remove("dragover");
   // };
 
-  const handleDrop = (event) => {
-    event.preventDefault();
-    dragAreaRef.current.classList.remove("dragover");
-    const file = event.dataTransfer.files[0];
-    if (file) {
-      // Perform any necessary operations with the file
-      // For example, you can set the image URL or perform validation
-      setImage(URL.createObjectURL(file));
-    }
-  };
+  // const handleDrop = (event) => {
+  //   event.preventDefault();
+  //   dragAreaRef.current.classList.remove("dragover");
+  //   const file = event.dataTransfer.files[0];
+  //   if (file) {
+  //     // Perform any necessary operations with the file
+  //     // For example, you can set the image URL or perform validation
+  //     setImage(URL.createObjectURL(file));
+  //   }
+  // };
 
   const handleDescriptionChange = (event: any) => {
     setDescription(event.target.value);
@@ -112,7 +112,7 @@ export default function Profile() {
             ref={dragAreaRef}
             // onDragOver={handleDragOver}
             // onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
+            // onDrop={handleDrop}
           >
             <input
               type="file"
