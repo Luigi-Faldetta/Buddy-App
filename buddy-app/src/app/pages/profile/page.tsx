@@ -20,37 +20,33 @@ export default function Profile() {
     setImage(event.target.value);
   };
 
+  // const handleFileSelect = (event) => {
+  //   event.preventDefault();
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     // Perform any necessary operations with the file
+  //     // For example, you can set the image URL or perform validation
+  //     setImage(() => {
+  //       const imgURL = URL.createObjectURL(file);
+
+  //       console.log("img URL ==> ", imgURL);
+  //       return imgURL;
+  //     });
+  //     setIsFileUploaded(true);
+  //   }
+  // };
+
   const handleFileSelect = (event) => {
     event.preventDefault();
     const file = event.target.files[0];
     if (file) {
       // Perform any necessary operations with the file
       // For example, you can set the image URL or perform validation
-      setImage(URL.createObjectURL(file));
+      const imgURL = URL.createObjectURL(file);
+      setImage(imgURL);
       setIsFileUploaded(true);
     }
   };
-
-  // const handleDragOver = (event) => {
-  //   event.preventDefault();
-  //   dragAreaRef.current.classList.add("dragover");
-  // };
-
-  // const handleDragLeave = (event) => {
-  //   event.preventDefault();
-  //   dragAreaRef.current.classList.remove("dragover");
-  // };
-
-  // const handleDrop = (event) => {
-  //   event.preventDefault();
-  //   dragAreaRef.current.classList.remove("dragover");
-  //   const file = event.dataTransfer.files[0];
-  //   if (file) {
-  //     // Perform any necessary operations with the file
-  //     // For example, you can set the image URL or perform validation
-  //     setImage(URL.createObjectURL(file));
-  //   }
-  // };
 
   const handleDescriptionChange = (event: any) => {
     setDescription(event.target.value);
@@ -79,14 +75,14 @@ export default function Profile() {
     router.push("/pages/search");
   };
 
-  const userData = JSON.parse(sessionStorage.getItem("userData"));
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   userData.image = image;
   userData.ownDescription = description;
   userData.buddyDescription = flatmate;
   userData.tags = selectedCheckboxes;
 
-  sessionStorage.setItem("userData", JSON.stringify(userData));
+  localStorage.setItem("userData", JSON.stringify(userData));
 
   return (
     <div className="relative flex flex-col items-center justify-center w-screen h-screen  bg-[url(../../public/4034811.jpg)] bg-cover  overflow-hidden">

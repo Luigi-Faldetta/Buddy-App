@@ -44,14 +44,14 @@ export default function Signup() {
     router.push("/pages/profile");
   };
 
-  const userData = JSON.parse(sessionStorage.getItem("userData")) || {};
+  const userData = JSON.parse(localStorage.getItem("userData")) || {};
 
   userData.firstName = name;
   userData.lastName = surname;
   userData.email = email;
   userData.password = password;
 
-  sessionStorage.setItem("userData", JSON.stringify(userData));
+  localStorage.setItem("userData", JSON.stringify(userData));
 
   return (
     <div>

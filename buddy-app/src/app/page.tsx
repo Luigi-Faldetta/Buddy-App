@@ -11,6 +11,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  localStorage.clear();
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -31,7 +33,7 @@ export default function Login() {
       // if (response.data.message === "Authentication successful") {
       if (response.data.user) {
         console.log(response.data.user.email);
-        sessionStorage.setItem("userData", JSON.stringify(response.data.user));
+        localStorage.setItem("userData", JSON.stringify(response.data.user));
         router.push("/pages/dashboard");
         // console.log(response.data.message);
       } else {

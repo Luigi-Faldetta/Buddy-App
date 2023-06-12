@@ -10,11 +10,11 @@ export default function Info() {
     (user) => user.firstName === (userData?.firstName || "")
   );
   useEffect(() => {
-    // Retrieve the stored user data from sessionStorage
-    const storedUserData = sessionStorage.getItem("userData");
-
+    // Retrieve the stored user data from localStorage
+    const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
+      console.log(JSON.parse(storedUserData));
     }
   }, []);
   useEffect(() => {
@@ -35,7 +35,9 @@ export default function Info() {
           <div>
             <h1>
               Welcome, {userData.firstName}! Your budget is {userData.budget}
+              and image is {userData.image}
             </h1>
+            <img src={userData.image} alt="bla" />
           </div>
         )}
       </div>

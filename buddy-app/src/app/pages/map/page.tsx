@@ -81,12 +81,12 @@ const Home: NextPage = () => {
     return null;
   };
 
-  const userData = JSON.parse(sessionStorage.getItem("userData"));
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   userData.location = String(selectedPlace);
   userData.radius = Number(selectedRadius);
 
-  sessionStorage.setItem("userData", JSON.stringify(userData));
+  localStorage.setItem("userData", JSON.stringify(userData));
 
   const handleSubmit = async (event: any) => {
     console.log("this is ", userData);

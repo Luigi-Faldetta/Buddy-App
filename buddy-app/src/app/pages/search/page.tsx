@@ -46,7 +46,7 @@ export default function Search() {
     router.push("pages/map");
   };
 
-  const userData = JSON.parse(sessionStorage.getItem("userData"));
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   userData.budget = Number(sliderValue);
   userData.date = selectedDate;
@@ -54,7 +54,7 @@ export default function Search() {
   userData.looking = true;
   userData.matched = false;
 
-  sessionStorage.setItem("userData", JSON.stringify(userData));
+  localStorage.setItem("userData", JSON.stringify(userData));
 
   return (
     <div>

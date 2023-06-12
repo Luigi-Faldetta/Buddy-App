@@ -15,7 +15,8 @@ export default function Dashboard() {
 
   const handleClick = (e) => {
     router.push("/pages/info");
-    const storedUserData = JSON.parse(sessionStorage.getItem("userData"));
+    const storedUserData = JSON.parse(localStorage.getItem("userData"));
+    console.log(storedUserData);
     const selectedUser = filteredUsers.find(
       (user) => user.id === e.target.dataset.userId
     );
@@ -24,8 +25,8 @@ export default function Dashboard() {
       storedUserData.email = selectedUser.email;
       setUserData({ ...storedUserData });
 
-      // Update the stored user data in sessionStorage
-      sessionStorage.setItem("userData", JSON.stringify(storedUserData));
+      // Update the stored user data in localStorage
+      localStorage.setItem("userData", JSON.stringify(storedUserData));
       console.log(storedUserData);
     }
   };
@@ -54,11 +55,11 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    // Retrieve the stored user data from sessionStorage
-    const storedUserData = sessionStorage.getItem("userData");
-    // console.log(storedUserData);
+    // Retrieve the stored user data from localStorage
+    const storedUserData = localStorage.getItem("userData");
+    console.log(storedUserData);
     setSearchRadius(JSON.parse(storedUserData).radius);
-    console.log(searchRadius);
+
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
     }
@@ -89,7 +90,7 @@ export default function Dashboard() {
         })
       : [];
     console.log(searchRadius);
-    console.log(filteredUsers);
+
     setFilteredUsers(filteredUsers);
   }, [users, userData, searchRadius, searchRoomType]);
 
@@ -103,6 +104,11 @@ export default function Dashboard() {
     setSearchRoomType(selectedRoomType);
   };
 
+  const handleLogOut = (e) => {
+    localStorage.clear();
+    router.push("/");
+  };
+
   return (
     <div>
       <div className="flex justify-center mt-4">
@@ -114,34 +120,23 @@ export default function Dashboard() {
       >
         My Profile
       </button>
+      <button
+        onClick={handleLogOut}
+        className="border-black border-2 border-solid"
+      >
+        Log out
+      </button>
+
       <div>
         {userData && (
           <div>
-            <h1>
-              Welcome, {userData.firstName}! Your budget is {userData.budget}
-            </h1>
+            <h1>Welcome, {userData.firstName}!</h1>
             {/* Display other user data as needed */}
           </div>
         )}
         {/* Render the rest of your dashboard page */}
       </div>
-      <div>
-        <h1>User List</h1>
-        <ul>
-          {filteredUsers.map((user) => (
-            <li key={user.id}>
-              <img
-                src={
-                  user.image
-                    ? user.image
-                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"
-                }
-                className="w-20 h-20"
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+
       <div className="flex items-center bg-gray-200 py-4 px-8">
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
@@ -192,7 +187,7 @@ export default function Dashboard() {
             {filteredUsers.map((user) => (
               <div className="w-1/3 p-4" key={user.id}>
                 <div className="relative bg-gray-200 rounded-lg p-4">
-                  <div className="bg-black w-20 h-20 aspect-w-4 aspect-h-3 rounded-md overflow-hidden">
+                  <div className=" w-20 h-20 aspect-w-4 aspect-h-3 rounded-md overflow-hidden">
                     {user.image ? (
                       <img
                         src={user.image}
@@ -215,6 +210,11 @@ export default function Dashboard() {
                     >
                       Tag 1
                     </button>
+                    <div>
+                      {user.budget} <span></span>
+                      {user.date} <span></span>
+                      {user.tags}
+                    </div>
                   </div>
                   <p className="mt-2 text-gray-700">{user.firstName}</p>
                 </div>
@@ -226,3 +226,19 @@ export default function Dashboard() {
     </div>
   );
 }
+
+//@ts-nocheck
+// "use client";
+// import Link from "next/link";
+// import { useRouter } from "next/navigation";
+// import { useState, useRef } from "react";
+
+// export default function Dashboard() {
+//   const storedUserData = JSON.parse(localStorage.getItem("userData"));
+//   console.log(storedUserData.image);
+//   return (
+//     <div>
+//       <img src={storedUserData.image} alt="" />
+//     </div>
+//   );
+// }
