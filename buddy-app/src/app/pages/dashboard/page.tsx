@@ -13,22 +13,31 @@ export default function Dashboard() {
 
   const router = useRouter();
 
+  // const handleClick = (e) => {
+  //   router.push("/pages/info");
+  //   const storedUserData = JSON.parse(localStorage.getItem("userData"));
+  //   console.log(storedUserData);
+  //   const selectedUser = filteredUsers.find(
+  //     (user) => user.id === e.target.dataset.userId
+  //   );
+
+  //   if (selectedUser) {
+  //     // storedUserData.email = selectedUser.email;
+  //     // setUserData({ ...storedUserData });
+
+  //     // // Update the stored user data in localStorage
+  //     // localStorage.setItem("userData", JSON.stringify(storedUserData));
+  //     // console.log(storedUserData);
+  //     const selectedUserId = e.target.dataset.userId;
+  //     localStorage.setItem("selectedUserId", selectedUserId);
+  //     router.push("/pages/info");
+  //   }
+  // };
+
   const handleClick = (e) => {
+    const selectedUserId = e.target.dataset.userId;
+    localStorage.setItem("selectedUserId", selectedUserId);
     router.push("/pages/info");
-    const storedUserData = JSON.parse(localStorage.getItem("userData"));
-    console.log(storedUserData);
-    const selectedUser = filteredUsers.find(
-      (user) => user.id === e.target.dataset.userId
-    );
-
-    if (selectedUser) {
-      storedUserData.email = selectedUser.email;
-      setUserData({ ...storedUserData });
-
-      // Update the stored user data in localStorage
-      localStorage.setItem("userData", JSON.stringify(storedUserData));
-      console.log(storedUserData);
-    }
   };
 
   const calculateDistance = (location1, location2) => {
@@ -105,7 +114,7 @@ export default function Dashboard() {
   };
 
   const handleLogOut = (e) => {
-    localStorage.clear();
+    // localStorage.clear();
     router.push("/");
   };
 
@@ -115,7 +124,9 @@ export default function Dashboard() {
         <h1>Buddy App</h1>
       </div>
       <button
-        onClick={handleClick}
+        onClick={() =>
+          handleClick({ target: { dataset: { userId: userData.email } } })
+        }
         className="border-black border-2 border-solid"
       >
         My Profile
@@ -123,6 +134,8 @@ export default function Dashboard() {
       <button
         onClick={handleLogOut}
         className="border-black border-2 border-solid"
+        // data-user-id={userData.firstName}
+        // key={userData.firstName}
       >
         Log out
       </button>
@@ -206,7 +219,8 @@ export default function Dashboard() {
                     <button
                       className="px-2 py-1 bg-blue-500 text-white rounded-md cursor-pointer"
                       onClick={handleClick}
-                      data-user-id={user.id}
+                      data-user-id={user.email}
+                      key={user.id}
                     >
                       Tag 1
                     </button>
@@ -226,19 +240,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-//@ts-nocheck
-// "use client";
-// import Link from "next/link";
-// import { useRouter } from "next/navigation";
-// import { useState, useRef } from "react";
-
-// export default function Dashboard() {
-//   const storedUserData = JSON.parse(localStorage.getItem("userData"));
-//   console.log(storedUserData.image);
-//   return (
-//     <div>
-//       <img src={storedUserData.image} alt="" />
-//     </div>
-//   );
-// }
