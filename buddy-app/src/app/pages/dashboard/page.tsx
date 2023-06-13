@@ -120,7 +120,17 @@ export default function Dashboard() {
       }
     });
 
-    setFilteredUsers(filteredUsersWithDate);
+    const sortedUsers = filteredUsersWithDate.sort((a, b) => {
+      const aMatches = a.tags
+        ? a.tags.filter((tag) => userData.tags.includes(tag))
+        : [];
+      const bMatches = b.tags
+        ? b.tags.filter((tag) => userData.tags.includes(tag))
+        : [];
+      return bMatches.length - aMatches.length;
+    });
+
+    setFilteredUsers(sortedUsers);
   }, [users, userData, searchRadius, searchRoomType, moveInDate]);
 
   const handleBudgetChange = (e) => {
