@@ -8,31 +8,11 @@ export default function Dashboard() {
   const [userData, setUserData] = useState(null);
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [searchRadius, setSearchRadius] = useState(0);
-  const [searchRoomType, setSearchRoomType] = useState("");
+  const [searchRadius, setSearchRadius] = useState(null);
+  const [searchRoomType, setSearchRoomType] = useState(null);
+  const [moveInDate, setMoveInDate] = useState(null);
 
   const router = useRouter();
-
-  // const handleClick = (e) => {
-  //   router.push("/pages/info");
-  //   const storedUserData = JSON.parse(localStorage.getItem("userData"));
-  //   console.log(storedUserData);
-  //   const selectedUser = filteredUsers.find(
-  //     (user) => user.id === e.target.dataset.userId
-  //   );
-
-  //   if (selectedUser) {
-  //     // storedUserData.email = selectedUser.email;
-  //     // setUserData({ ...storedUserData });
-
-  //     // // Update the stored user data in localStorage
-  //     // localStorage.setItem("userData", JSON.stringify(storedUserData));
-  //     // console.log(storedUserData);
-  //     const selectedUserId = e.target.dataset.userId;
-  //     localStorage.setItem("selectedUserId", selectedUserId);
-  //     router.push("/pages/info");
-  //   }
-  // };
 
   const handleClick = (e) => {
     const selectedUserId = e.target.dataset.userId;
@@ -88,24 +68,46 @@ export default function Dashboard() {
     fetchUsers();
   }, []);
 
+  // ...
+
   useEffect(() => {
-    const filteredUsers = userData
-      ? users.filter((user) => {
-          const distance = calculateDistance(userData.location, user.location);
-          return (
-            user.password !== (userData?.password || "") &&
-            distance <= searchRadius
-          );
-        })
-      : [];
-    console.log(searchRadius);
+    const filteredUsers = users
+      .filter((user) => {
+        // Filter users based on the search radius
+        if (searchRadius === "1000") {
+          return user.budget >= 0 && user.budget <= 1000;
+        } else if (searchRadius === "2000") {
+          return user.budget >= 1000 && user.budget <= 2000;
+        } else if (searchRadius === "3000") {
+          return user.budget >= 2000 && user.budget <= 3000;
+        } else {
+          return true; // No budget filter applied
+        }
+      })
+      .filter((user) => {
+        // Filter users based on the room type
+        if (searchRoomType) {
+          return user.roomType.toLowerCase() === searchRoomType.toLowerCase(); // Compare with lowercase
+        } else {
+          return true; // No room type filter applied
+        }
+      })
+      .filter((user) => {
+        // Filter users based on the move-in date
+        if (moveInDate) {
+          const userMoveInDate = new Date(user.date);
+          return userMoveInDate >= moveInDate;
+        } else {
+          return true; // No move-in date filter applied
+        }
+      });
 
     setFilteredUsers(filteredUsers);
-  }, [users, userData, searchRadius, searchRoomType]);
+  }, [users, userData, searchRadius, searchRoomType, moveInDate]);
 
   const handleBudgetChange = (e) => {
     const selectedBudget = e.target.value;
-    setSearchRadius(Number(selectedBudget));
+    setSearchRadius(selectedBudget === "" ? null : selectedBudget);
   };
 
   const handleRoomTypeChange = (e) => {
@@ -114,8 +116,12 @@ export default function Dashboard() {
   };
 
   const handleLogOut = (e) => {
-    // localStorage.clear();
     router.push("/");
+  };
+
+  const handleMoveInDateChange = (e) => {
+    const selectedMoveInDate = new Date(e.target.value);
+    setMoveInDate(selectedMoveInDate);
   };
 
   return (
@@ -134,8 +140,6 @@ export default function Dashboard() {
       <button
         onClick={handleLogOut}
         className="border-black border-2 border-solid"
-        // data-user-id={userData.firstName}
-        // key={userData.firstName}
       >
         Log out
       </button>
@@ -154,12 +158,13 @@ export default function Dashboard() {
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
             <label htmlFor="budget" className="mr-2 font-semibold">
-              Budget:
+              Budget (up to):
             </label>
             <select
               id="budget"
               className="border border-gray-400 px-2 py-1 rounded"
               onChange={handleBudgetChange}
+              value={searchRadius || ""}
             >
               <option value="">Any</option>
               <option value="1000">$1000</option>
@@ -187,6 +192,8 @@ export default function Dashboard() {
               Move-in Date:
             </label>
             <input
+              value={moveInDate ? moveInDate.toISOString().split("T")[0] : ""}
+              onChange={handleMoveInDateChange}
               type="date"
               id="moveInDate"
               className="border border-gray-400 px-2 py-1 rounded"
