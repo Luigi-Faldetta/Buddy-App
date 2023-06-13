@@ -69,94 +69,58 @@ export default function Dashboard() {
     fetchUsers();
   }, []);
 
-  // ...
-
-  // useEffect(() => {
-  //   const filteredUsers = users
-  //     .filter((user) => {
-  //       // Filter users based on the search radius
-  //       if (searchRadius === "1000") {
-  //         return user.budget >= 0 && user.budget <= 1000;
-  //       } else if (searchRadius === "2000") {
-  //         return user.budget >= 1000 && user.budget <= 2000;
-  //       } else if (searchRadius === "3000") {
-  //         return user.budget >= 2000 && user.budget <= 3000;
-  //       } else {
-  //         return true; // No budget filter applied
-  //       }
-  //     })
-  //     .filter((user) => {
-  //       // Filter users based on the room type
-  //       if (searchRoomType) {
-  //         return user.roomType.toLowerCase() === searchRoomType.toLowerCase(); // Compare with lowercase
-  //       } else {
-  //         return true; // No room type filter applied
-  //       }
-  //     })
-  //     .filter((user) => {
-  //       // Filter users based on the move-in date
-  //       if (moveInDate) {
-  //         const userMoveInDate = new Date(user.date);
-  //         return userMoveInDate >= moveInDate;
-  //       } else {
-  //         return true; // No move-in date filter applied
-  //       }
-  //     });
-
-  //   setFilteredUsers(filteredUsers);
-  // }, [users, userData, searchRadius, searchRoomType, moveInDate]);
-
   useEffect(() => {
-    const filteredUsers = users
-      .filter((user) => {
-        const distance = calculateDistance(userData.location, user.location);
-        const isWithinRadius =
-          searchRadius === null ||
-          searchRadius === "" || // Consider empty string as 'Any'
-          searchRadius === 0 || // Consider 0 as 'Any'
-          distance <= searchRadius;
-        const matchesRoomType =
-          searchRoomType === null ||
-          searchRoomType === "" || // Consider empty string as 'Any'
-          user.roomType.toLowerCase() === searchRoomType.toLowerCase();
-        const isCurrentUser = user.email === userData.email;
-        const matchesTags =
-          userData.tags &&
-          userData.tags.length > 0 &&
-          user.tags &&
-          user.tags.length > 0 &&
-          user.tags.some((tag) => userData.tags.includes(tag));
+    const filteredUsers = users.filter((user) => {
+      const distance = calculateDistance(userData.location, user.location);
+      const isWithinRadius =
+        searchRadius === null ||
+        searchRadius === "" || // Consider empty string as 'Any'
+        searchRadius === 0 || // Consider 0 as 'Any'
+        distance <= searchRadius;
+      const matchesRoomType =
+        searchRoomType === null ||
+        searchRoomType === "" || // Consider empty string as 'Any'
+        user.roomType.toLowerCase() === searchRoomType.toLowerCase();
+      const isCurrentUser = user.email === userData.email;
+      const matchesTags =
+        userData.tags &&
+        userData.tags.length > 0 &&
+        user.tags &&
+        user.tags.length > 0 &&
+        user.tags.some((tag) => userData.tags.includes(tag));
 
-        return (
-          !isCurrentUser &&
-          (searchRadius === null || isWithinRadius) &&
-          (searchRoomType === null || matchesRoomType) &&
-          matchesTags
-        );
-      })
-      .filter((user) => {
-        // Filter users based on the budget option selected
-        if (searchRadius === 1000) {
-          return user.budget <= 1000;
-        } else if (searchRadius === 2000) {
-          return user.budget >= 1000 && user.budget <= 2000;
-        } else if (searchRadius === 3000) {
-          return user.budget >= 2000 && user.budget <= 3000;
-        } else {
-          return true; // No budget filter applied
-        }
-      })
-      .filter((user) => {
-        // Filter users based on the move-in date
-        if (moveInDate) {
-          const userMoveInDate = new Date(user.moveInDate);
-          return userMoveInDate <= moveInDate;
-        } else {
-          return true; // No move-in date filter applied
-        }
-      });
+      return (
+        !isCurrentUser &&
+        (searchRadius === null || isWithinRadius) &&
+        (searchRoomType === null || matchesRoomType) &&
+        matchesTags
+      );
+    });
 
-    setFilteredUsers(filteredUsers);
+    const filteredUsersWithBudget = filteredUsers.filter((user) => {
+      // Filter users based on the budget option selected
+      if (searchRadius === "1000") {
+        return user.budget >= 0 && user.budget <= 1000;
+      } else if (searchRadius === "2000") {
+        return user.budget >= 1000 && user.budget <= 2000;
+      } else if (searchRadius === "3000") {
+        return user.budget >= 2000 && user.budget <= 3000;
+      } else {
+        return true; // No budget filter applied
+      }
+    });
+
+    const filteredUsersWithDate = filteredUsersWithBudget.filter((user) => {
+      // Filter users based on the move-in date
+      if (moveInDate) {
+        const userMoveInDate = new Date(user.date);
+        return userMoveInDate <= moveInDate;
+      } else {
+        return true; // No move-in date filter applied
+      }
+    });
+
+    setFilteredUsers(filteredUsersWithDate);
   }, [users, userData, searchRadius, searchRoomType, moveInDate]);
 
   const handleBudgetChange = (e) => {
