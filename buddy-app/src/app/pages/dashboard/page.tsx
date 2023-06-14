@@ -70,6 +70,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    console.log("what is this ==> ", users);
     const filteredUsers = users.filter((user) => {
       const distance = calculateDistance(userData.location, user.location);
       const isWithinRadius =
@@ -164,41 +165,39 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
-      <div className="flex justify-center mt-4">
+    <div className="bg-[url(../../public/4034811.jpg)] bg-cover w-screen h-screen mt-0">
+      <div className="flex justify-center pt-4 text-red-500 font-bold text-3xl mb-4">
         <h1>Buddy App</h1>
       </div>
       <button
         onClick={() =>
           handleClick({ target: { dataset: { userId: userData.email } } })
         }
-        className="border-black border-2 border-solid"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mx-4 mb-4 px-4 border border-blue-700 rounded"
       >
         My Profile
       </button>
       <button
         onClick={handleLogOut}
-        className="border-black border-2 border-solid"
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-red-700 rounded"
       >
         Log out
       </button>
 
-      <div>
+      <div className="m-4 text-[18px] font-bold text-red-500">
         {userData && (
           <div>
-            <h1>
-              Welcome, {userData.firstName}! {userData.tags}
-            </h1>
+            <h1>Welcome to your dashboard, {userData.firstName}!</h1>
             {/* Display other user data as needed */}
           </div>
         )}
         {/* Render the rest of your dashboard page */}
       </div>
 
-      <div className="flex items-center bg-gray-200 py-4 px-8">
+      <div className="flex items-center bg-red-500 py-4 px-8 shadow-blur-lg opacity-80">
         <div className="flex items-center space-x-4">
           <div className="flex items-center">
-            <label htmlFor="budget" className="mr-2 font-semibold">
+            <label htmlFor="budget" className="mr-2 font-semibold text-white">
               Budget (up to):
             </label>
             <select
@@ -214,7 +213,7 @@ export default function Dashboard() {
             </select>
           </div>
           <div className="flex items-center">
-            <label htmlFor="roomType" className="mr-2 font-semibold">
+            <label htmlFor="roomType" className="mr-2 font-semibold text-white">
               Room Type:
             </label>
             <select
@@ -229,7 +228,10 @@ export default function Dashboard() {
             </select>
           </div>
           <div className="flex items-center">
-            <label htmlFor="moveInDate" className="mr-2 font-semibold">
+            <label
+              htmlFor="moveInDate"
+              className="mr-2 font-semibold text-white"
+            >
               Move-in Date:
             </label>
             <input
@@ -244,10 +246,10 @@ export default function Dashboard() {
       </div>
       <div className="flex justify-center mt-8">
         <div className="w-3/4 h-full">
-          <div className="flex flex-wrap justify-center bg-blue-400">
+          <div className="flex flex-wrap justify-center">
             {filteredUsers.map((user) => (
               <div className="w-1/3 p-4" key={user.id}>
-                <div className="relative bg-gray-200 rounded-lg p-4">
+                <div className="relative bg-white rounded-lg p-4 opacity-90">
                   <div className=" w-20 h-20 aspect-w-4 aspect-h-3 rounded-md overflow-hidden">
                     {user.image ? (
                       <img
@@ -270,15 +272,17 @@ export default function Dashboard() {
                       data-user-id={user.email}
                       key={user.id}
                     >
-                      Tag 1
+                      View
                     </button>
-                    <div>
+                    <div className="block text-sm font-semibold text-gray-800 mt-2">
                       {user.budget} <span></span>
                       {user.date} <span></span>
                       {user.tags}
                     </div>
                   </div>
-                  <p className="mt-2 text-gray-700">{user.firstName}</p>
+                  <p className="mt-2 font-semibold text-gray-800">
+                    {user.firstName}
+                  </p>
                 </div>
               </div>
             ))}

@@ -25,7 +25,7 @@ model User {
   location         String
   radius           Int
   tags             String[]
-  looking          Boolean
+  invited          Boolean
   matched          Boolean
   createdAt        DateTime @default(now())
   updateAt         DateTime @updatedAt

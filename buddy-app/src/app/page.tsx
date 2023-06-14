@@ -9,6 +9,7 @@ import axios from "axios";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showAbout, setShowAbout] = useState(false);
   const router = useRouter();
 
   localStorage.clear();
@@ -34,6 +35,7 @@ export default function Login() {
       if (response.data.user) {
         console.log(response.data.user.email);
         localStorage.setItem("userData", JSON.stringify(response.data.user));
+        localStorage.setItem("loggedUser", JSON.stringify(response.data.user));
         router.push("/pages/dashboard");
         // console.log(response.data.message);
       } else {
@@ -47,6 +49,12 @@ export default function Login() {
 
   return (
     <div className="relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-[url(../../public/4034811.jpg)] bg-cover overflow-y-hidden overflow-x-hidden">
+      <Link
+        href="/pages/about"
+        className="absolute top-4 left-4 text-s text-blue-600 hover:underline"
+      >
+        About
+      </Link>
       <div className="opacity-90 w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
         <h1 className="text-3xl font-bold text-center text-red-500">
           Buddy App

@@ -8,6 +8,7 @@ import {
 } from "@react-google-maps/api";
 import type { NextPage } from "next";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import axios from "axios";
 import PlacesAutocomplete from "../../PlacesAutoComplete";
@@ -32,7 +33,7 @@ const Home: NextPage = () => {
     () => ({
       disableDefaultUI: true,
       clickableIcons: true,
-      scrollwheel: true,
+      scrollwheel: false,
       mapTypeControl: true,
       streetViewControl: true,
       fullscreenControl: true,
@@ -116,67 +117,160 @@ const Home: NextPage = () => {
   return (
     <div>
       <div className="relative overflow-scroll flex flex-col items-center justify-center w-screen h-screen bg-[url(../../public/4034811.jpg)] bg-cover overflow-y-hidden overflow-x-hidden">
-        <form
-          className=" w-3/7 p-6 bg-white rounded-md shadow-md overflow-scroll h-screen"
-          onSubmit={handleSubmit}
-        >
-          <div>
-            <PlacesAutocomplete
-              onAddressSelect={(address) => {
-                getGeocode({ address: address }).then((results: any) => {
-                  const { lat, lng } = getLatLng(results[0]);
-                  const selectedLatLng = new google.maps.LatLng(lat, lng);
-                  setSelectedPlace(selectedLatLng);
+        <div className="w-3/7 p-6 bg-white rounded-md text-center shadow-md overflow-scroll h-4/5 ">
+          <Link
+            href="/"
+            className="text-3xl font-bold  text-red-500 text-center mx-20"
+          >
+            Buddy App
+          </Link>
+          <form onSubmit={handleSubmit}>
+            <div class=" py-4 overflow-x-auto whitespace-nowrap mt-3 px-20 ml-10 mr-20">
+              <div className="flex flex-row justify-end align-middle">
+                <a href="/" class="text-gray-600 dark:text-gray-200">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                  </svg>
+                </a>
 
-                  setLat(lat);
-                  setLng(lng);
-                  setZoom(14);
-                });
-              }}
-            ></PlacesAutocomplete>
-            <div>
-              <label className="block text-sm font-semibold text-gray-800 mt-4">
-                Choose your search radius
-              </label>
-              <select
-                className="mt-2 mb-4 border-2 border-black rounded-md border-solid"
-                value={selectedRadius}
-                onChange={handleRadiusChange}
-              >
-                <option value="">Select an option</option>
-                <option value="1">1 mile</option>
-                <option value="2">2 miles</option>
-                <option value="3">3 miles</option>
-                <option value="4">4 miles</option>
-                <option value="5">5 miles</option>
-                <option value="6">6 miles</option>
-                <option value="7">7 miles</option>
-                <option value="8">8 miles</option>
-                <option value="9">9 miles</option>
-                <option value="10">10 miles</option>
-              </select>
+                <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+
+                <span class="text-gray-600 dark:text-gray-200">
+                  Credentials
+                </span>
+
+                <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+
+                <span class="text-gray-600 dark:text-gray-200">You</span>
+
+                <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+
+                <span class="text-gray-600 dark:text-gray-200">Search</span>
+                <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+
+                <span class="font-bold text-red-500 dark:text-gray-200">
+                  Location
+                </span>
+              </div>
             </div>
-            <GoogleMap
-              options={mapOptions}
-              zoom={zoom}
-              center={selectedPlace || mapCenter}
-              mapTypeId={google.maps.MapTypeId.ROADMAP}
-              mapContainerStyle={{ width: "800px", height: "800px" }}
-              onLoad={() => console.log("Map Component Loaded...")}
-              onZoomChanged={handleZoomChange}
-            >
-              {selectedPlace && <Marker position={selectedPlace} />}
-              {renderCircle()}
-            </GoogleMap>
-          </div>
-          <button
-            className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 mt-6 .cursor-pointer:hover {
+            <label className="block text-sm font-semibold text-gray-800 mb-2">
+              Choose your location
+            </label>
+            <div>
+              <PlacesAutocomplete
+                onAddressSelect={(address) => {
+                  getGeocode({ address: address }).then((results: any) => {
+                    const { lat, lng } = getLatLng(results[0]);
+                    const selectedLatLng = new google.maps.LatLng(lat, lng);
+                    setSelectedPlace(selectedLatLng);
+
+                    setLat(lat);
+                    setLng(lng);
+                    setZoom(14);
+                  });
+                }}
+              ></PlacesAutocomplete>
+              <div>
+                <label className="block text-sm font-semibold text-gray-800 mt-4">
+                  Choose your search radius
+                </label>
+                <select
+                  className="mt-2 mb-4 border-2 border-black rounded-md border-solid"
+                  value={selectedRadius}
+                  onChange={handleRadiusChange}
+                >
+                  <option value="">Select an option</option>
+                  <option value="1">1 mile</option>
+                  <option value="2">2 miles</option>
+                  <option value="3">3 miles</option>
+                  <option value="4">4 miles</option>
+                  <option value="5">5 miles</option>
+                  <option value="6">6 miles</option>
+                  <option value="7">7 miles</option>
+                  <option value="8">8 miles</option>
+                  <option value="9">9 miles</option>
+                  <option value="10">10 miles</option>
+                </select>
+              </div>
+              <GoogleMap
+                options={mapOptions}
+                zoom={zoom}
+                center={selectedPlace || mapCenter}
+                mapTypeId={google.maps.MapTypeId.ROADMAP}
+                mapContainerStyle={{ width: "800px", height: "800px" }}
+                onLoad={() => console.log("Map Component Loaded...")}
+                onZoomChanged={handleZoomChange}
+              >
+                {selectedPlace && <Marker position={selectedPlace} />}
+                {renderCircle()}
+              </GoogleMap>
+            </div>
+            <button
+              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 mt-6 .cursor-pointer:hover {
           cursor: pointer;
         }"
-          >
-            Sign up
-          </button>
-        </form>
+            >
+              Sign up
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

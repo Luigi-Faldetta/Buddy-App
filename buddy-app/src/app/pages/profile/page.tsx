@@ -20,22 +20,6 @@ export default function Profile() {
     setImage(event.target.value);
   };
 
-  // const handleFileSelect = (event) => {
-  //   event.preventDefault();
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     // Perform any necessary operations with the file
-  //     // For example, you can set the image URL or perform validation
-  //     setImage(() => {
-  //       const imgURL = URL.createObjectURL(file);
-
-  //       console.log("img URL ==> ", imgURL);
-  //       return imgURL;
-  //     });
-  //     setIsFileUploaded(true);
-  //   }
-  // };
-
   const handleFileSelect = (event) => {
     event.preventDefault();
     const file = event.target.files[0];
@@ -94,6 +78,85 @@ export default function Profile() {
           <Link href="/" className="text-3xl font-bold  text-red-500">
             Buddy App
           </Link>
+        </div>
+        <div className="flex items-center py-4 overflow-x-auto whitespace-nowrap mt-6">
+          <a href="/" className="text-gray-600 dark:text-gray-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+          </a>
+
+          <span className="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+
+          <span className="text-gray-600 dark:text-gray-200">Credentials</span>
+
+          <span className="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+
+          <span className="text-red-500 font-bold dark:text-gray-200">You</span>
+
+          <span className="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+
+          <span className="text-gray-600 dark:text-gray-200">Search</span>
+          <span className="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
+
+          <span className="text-gray-600 dark:text-gray-200">Location</span>
         </div>
         <h2 className="mt-6 font-bold text-center text-red-500 pb-5">
           Nice one! Time to create a profile 😎
@@ -199,128 +262,128 @@ export default function Profile() {
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="horns"
+                id="option"
+                name="Clean"
                 className="mr-1"
                 onChange={handleCheckboxChange}
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Clean">
+                Clean <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="swords"
+                id="option"
+                name="Quiet"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Quiet">
+                Quiet <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="hammer"
+                id="option"
+                name="Social"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Social">
+                Social <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="axe"
+                id="option"
+                name="Food"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Food">
+                Food <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="horns"
+                id="option"
+                name="Music"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Music">
+                Music <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="horns"
+                id="option"
+                name="Garden"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Garden">
+                Garden <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="horns"
+                id="option"
+                name="Sports"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Sports">
+                Sports <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="horns"
+                id="option"
+                name="Games"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Games">
+                Games <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="horns"
+                id="option"
+                name="Pets"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Pets">
+                Pets <span w-px>❓</span>
               </label>
             </div>
             <div>
               <input
                 type="checkbox"
-                id="horns"
-                name="horns"
+                id="option"
+                name="Movies"
                 className="mr-1"
                 onChange={handleCheckboxChange}
               />
-              <label for="horns">
-                Horns <span w-px>❓</span>
+              <label for="Movies">
+                Movies <span w-px>❓</span>
               </label>
             </div>
           </div>
         </fieldset>
         <div>
-          <h3>Selected Checkboxes:</h3>
+          <h3 className="mt-4">Selected Checkboxes:</h3>
           {selectedCheckboxes.length === 0 ? (
             <p>No checkboxes selected.</p>
           ) : (
@@ -331,7 +394,6 @@ export default function Profile() {
             </ul>
           )}
         </div>
-
         <div className="mt-2">
           <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600 mt-6">
             Confirm

@@ -30,19 +30,6 @@ export default function Search() {
   const handleSubmit = async (event: any) => {
     console.log("this is ", userData);
     event.preventDefault();
-    // try {
-    //   // Send a POST request to your API endpoint
-    //   const response = await axios.post("/api/register", {
-    //   userData
-    //   });
-
-    //   console.log("User created:", response.data);
-    //   // Handle successful response or redirect the user to a success page
-    // } catch (error) {
-    //   console.error("Error creating user:", error);
-    //   // Handle error response or show an error message to the user
-    // }
-
     router.push("pages/map");
   };
 
@@ -51,7 +38,7 @@ export default function Search() {
   userData.budget = Number(sliderValue);
   userData.date = selectedDate;
   userData.roomType = roomType;
-  userData.looking = true;
+  userData.invited = false;
   userData.matched = false;
 
   localStorage.setItem("userData", JSON.stringify(userData));
@@ -67,6 +54,87 @@ export default function Search() {
             <Link href="/" className="text-3xl font-bold  text-red-500">
               Buddy App
             </Link>
+          </div>
+          <div class="flex items-center py-4 overflow-x-auto whitespace-nowrap mt-6">
+            <a href="/" class="text-gray-600 dark:text-gray-200">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+              </svg>
+            </a>
+
+            <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+
+            <span class="text-gray-600 dark:text-gray-200">Credentials</span>
+
+            <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+
+            <span class="text-gray-600 dark:text-gray-200">You</span>
+
+            <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+
+            <span class="dark:text-gray-200 font-bold text-red-500">
+              Search
+            </span>
+            <span class="mx-5 text-gray-500 dark:text-gray-300 rtl:-scale-x-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </span>
+
+            <span class="text-gray-600 dark:text-gray-200">Location</span>
           </div>
           <h2 className="mt-6 font-bold text-center text-red-500">
             To finish off, give us some info about your search 🏠
@@ -137,7 +205,7 @@ export default function Search() {
           cursor: pointer;
         }"
             >
-              Sign up
+              Continue
             </button>
           </div>
         </form>
