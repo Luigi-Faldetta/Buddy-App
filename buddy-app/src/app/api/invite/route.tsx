@@ -14,20 +14,12 @@ export async function PUT(req) {
   const { email, invited } = body;
 
   try {
-    // if (invited) {
     const user = await prisma.user.update({
       where: { email: email },
       data: { invited: true },
     });
 
     res.json({ message: "Invitation status updated successfully" });
-    // } else {
-    //   await prisma.user.update({
-    //     where: { email: email },
-    //     data: { invited: false },
-    //   });
-    //   res.json({ message: "Invitation status updated successfully" });
-    // }
   } catch (error) {
     console.error(error);
     res.json({ error: "Failed to update invitation status" });

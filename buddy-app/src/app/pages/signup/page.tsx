@@ -11,17 +11,6 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  // const handleSubmit = async ({ email, password }: any) => {
-  //   // event.preventDefault();
-  //   const { data } = await axios.post("/pages/api", {
-  //     email,
-  //     password,
-  //   });
-
-  //   // Process form data
-
-  //   router.push("/pages/profile");
-  // };
 
   const handleNameChange = (event: any) => {
     setName(event.target.value);
@@ -39,7 +28,6 @@ export default function Signup() {
   };
 
   const handleSubmit = (event: any) => {
-    // const router = useRouter();
     event.preventDefault();
     router.push("/pages/profile");
   };
